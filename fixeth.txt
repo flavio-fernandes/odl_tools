@@ -1,0 +1,12 @@
+
+THIS_HOST='14X'
+hostnamectl set-hostname "fedora${THIS_HOST}"
+
+for intf in eth0 eth1 eth2; do
+   mac=$(ip link | grep -A 1 $intf: | grep link | awk '{print $2}')
+   sed -i -e 's/^HWADDR.*$/HWADDR='$mac'/' ifcfg-$intf
+   sed -i -e 's/^BOOTPROTO.*$/BOOTPROTO=none/' ifcfg-$intf
+   sed -i -e 's/^UUID/#UUID/' ifcfg-$intf
+   sed -i -e 's/^ONBOOT.*$/ONBOOT=yes/' ifcfg-$intf
+   sed -i -e 's/^NAME.*$/NAME='$intf'/' ifcfg-$intf
+done
