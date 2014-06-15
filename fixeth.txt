@@ -1,12 +1,20 @@
 
 THIS_HOST='14X'
+
+OLD_HOST='141'
+IP_ADDR_PREFIX1='172.16.18.'
+IP_ADDR_PREFIX2='172.16.150.'
+
 hostnamectl set-hostname "fedora${THIS_HOST}"
 
 for intf in eth0 eth1 eth2; do
+   curr_file="/etc/sysconfig/network-scripts/ifcfg-${intf}"
    mac=$(ip link | grep -A 1 $intf: | grep link | awk '{print $2}')
-   sed -i -e 's/^HWADDR.*$/HWADDR='$mac'/' ifcfg-$intf
-   sed -i -e 's/^BOOTPROTO.*$/BOOTPROTO=none/' ifcfg-$intf
-   sed -i -e 's/^UUID/#UUID/' ifcfg-$intf
-   sed -i -e 's/^ONBOOT.*$/ONBOOT=yes/' ifcfg-$intf
-   sed -i -e 's/^NAME.*$/NAME='$intf'/' ifcfg-$intf
+   sed -i -e 's/^HWADDR.*$/HWADDR='$mac'/' ${curr_file}
+   sed -i -e 's/^BOOTPROTO.*$/BOOTPROTO=none/' ${curr_file}
+   sed -i -e 's/^UUID/#UUID/' ${curr_file}
+   sed -i -e 's/^ONBOOT.*$/ONBOOT=yes/' ${curr_file}
+   sed -i -e 's/^NAME.*$/NAME='$intf'/' ${curr_file}
+   sed -i -e 's/^IPADDR='${IP_ADDR_PREFIX1}${OLD_HOST}'.*$/IPADDR='${IP_ADDR_PREFIX1}${THIS_HOST}'/' ${curr_file}
+   sed -i -e 's/^IPADDR='${IP_ADDR_PREFIX2}${OLD_HOST}'.*$/IPADDR='${IP_ADDR_PREFIX2}${THIS_HOST}'/' ${curr_file}
 done
