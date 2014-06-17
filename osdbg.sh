@@ -6,6 +6,9 @@ echo
 echo -n "New capture: $1 " ; date
 echo 
 
+sudo virsh list
+neutron net-list
+
 ip link
 ip addr
 
@@ -18,6 +21,7 @@ for i in $(ip netns); do
 done
 
 sudo brctl show
+sudo ovsdb-client dump
 sudo ovs-dpctl show
 sudo ovs-dpctl dump-flows
 sudo ovs-vsctl show
