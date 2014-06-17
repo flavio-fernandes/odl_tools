@@ -3,7 +3,7 @@
 set -x
 
 echo
-echo "New capture: $1"
+echo -n "New capture: $1 " ; date
 echo 
 
 ip link
@@ -23,9 +23,11 @@ sudo ovs-dpctl dump-flows
 sudo ovs-vsctl show
 
 for i in `sudo ovs-vsctl list-br`; do
-    sudo ovs-ofctl show $i
-    sudo ovs-ofctl dump-flows $i
-    sudo ovs-ofctl -O OpenFlow13 dump-flows $i
+    for proto in OpenFlow10 OpenFlow13 ; do
+        sudo ovs-ofctl -O ${proto} show $i
+        sudo ovs-ofctl -O ${proto} dump-flows $i
+    done
+    sudo ovs-appctl fdb/show $i
 done
 
 exit 0
