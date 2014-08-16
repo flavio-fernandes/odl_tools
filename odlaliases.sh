@@ -34,3 +34,6 @@ alias src="source ~/.bashrc"
 alias vsh="sudo virsh list"
 alias ns="sudo ip netns exec "
 
+alias beep='echo -en "\007"'
+alias uwget='wget --no-check-certificate'
+alias dostack='cd /opt/devstack/ && ./stack.sh ; beep'
