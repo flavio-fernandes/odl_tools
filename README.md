@@ -3,5 +3,8 @@ odl_tools
 
 Misc scripts and files to help wih old/devstack devel
 
-For more info: http://potofjoy.com/flavioBlogwork/creating-openstack-nodes.html
+**NOTE: This repo may be out of date!**
+**Consider using Sam's repo instead: https://github.com/shague/odl_tools**
+
+For more info: http://potofjoy.com/flavioBlog/work/creating-openstack-nodes.html
 
